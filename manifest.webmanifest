@@ -1,0 +1,10 @@
+{
+  "name": "My Skin Journal",
+  "short_name": "Skin Journal",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f7eeeb",
+  "theme_color": "#ead6d0",
+  "lang": "fr",
+  "description": "Carnet personnel de suivi de la peau"
+}

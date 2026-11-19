@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ead6d0">
+<title>My Skin Journal</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{--rose:#ead6d0;--rose2:#f6eae6;--beige:#f5f0e8;--ink:#514542;--muted:#887873;--white:#fffdfb;--line:#eadfd9;--accent:#b98280}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#f7eeeb,#f7f3ed 45%,#fffdfb);color:var(--ink);font:16px -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+header{padding:28px 20px 18px;text-align:center;background:#ead6d0}header h1{margin:0;font-family:Georgia,serif;font-size:30px;font-weight:500}header p{margin:7px 0 0;color:#725f5b;font-size:13px;letter-spacing:.04em}
+nav{display:flex;gap:8px;padding:12px;overflow:auto;background:#f8efec;position:sticky;top:0;z-index:2}nav button{white-space:nowrap;border:1px solid var(--line);background:#fffaf8;color:var(--ink);border-radius:22px;padding:10px 14px;font-size:13px}nav button.active{background:#b98280;color:white;border-color:#b98280}
+main{max-width:760px;margin:auto;padding:16px}.panel{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px;margin:0 0 14px;box-shadow:0 4px 16px #7a55550a}
+h2{font:22px Georgia,serif;margin:0 0 14px}h3{font-size:15px;margin:18px 0 8px}.hint{font-size:12px;color:var(--muted);line-height:1.5}
+label{display:block;font-size:13px;color:#6f5d58;margin:12px 0 6px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px;background:#fff;color:var(--ink);font:15px inherit}textarea{min-height:76px;resize:vertical}
+.options{display:flex;flex-wrap:wrap;gap:7px}.options label{margin:0}.options input{position:absolute;opacity:0;width:1px}.options span{display:block;border:1px solid var(--line);border-radius:18px;padding:8px 11px;background:#fffaf8;font-size:13px}.options input:checked+span{background:#f0deda;border-color:#c99a96}
+button.primary{background:#b98280;color:white;border:0;border-radius:22px;padding:12px 18px;font-size:14px;font-weight:600}button.secondary{background:#f6eae6;color:#755c58;border:1px solid #e8d5d0;border-radius:22px;padding:10px 14px;font-size:13px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}.stat{background:#fbf4f1;border-radius:14px;padding:13px}.stat b{display:block;font:24px Georgia,serif}.stat small{color:var(--muted)}
+.entry{border-top:1px solid var(--line);padding:12px 0}.entry:first-child{border-top:0}.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.photos img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px}
+.hidden{display:none!important}.scale{display:flex;align-items:center;gap:10px}.scale input{flex:1}.scale output{min-width:35px;text-align:center;font-weight:600}
+footer{text-align:center;padding:22px;color:var(--muted);font-size:11px}
+@media(min-width:600px){main{padding:24px}header{padding:34px}}
+</style>
+</head>
+<body>
+<header><h1>My Skin Journal</h1><p>MON PETIT CARNET DE PEAU · AVEC DOUCEUR</p></header>
+<nav>
+<button class="active" data-tab="today">Aujourd'hui</button><button data-tab="history">Mon historique</button><button data-tab="photos">Mes photos</button><button data-tab="report">Bilan mensuel</button>
+</nav>
+<main>
+<section id="today">
+<div class="panel"><h2>Mon suivi du jour</h2><p class="hint">Tes réponses sont enregistrées dans le stockage de ce navigateur sur cet appareil. Pense à exporter une sauvegarde régulièrement.</p>
+<label>Date</label><input type="date" id="date">
+<h3>1. Ma peau aujourd'hui</h3>
+<label>État général</label><div class="options" data-name="skin"><label><input type="radio" name="skin" value="Calme"><span>Calme</span></label><label><input type="radio" name="skin" value="Quelques imperfections"><span>Quelques imperfections</span></label><label><input type="radio" name="skin" value="Petite poussée"><span>Petite poussée</span></label><label><input type="radio" name="skin" value="Poussée importante"><span>Poussée importante</span></label><label><input type="radio" name="skin" value="Irritée/sensible"><span>Irritée / sensible</span></label><label><input type="radio" name="skin" value="Sèche"><span>Sèche</span></label><label><input type="radio" name="skin" value="Plus grasse"><span>Plus grasse</span></label></div>
+<label>Type de boutons (plusieurs choix)</label><div class="options" id="types"></div>
+<label>Zones concernées</label><div class="options" id="zones"></div>
+<label>Note globale de ma peau /10</label><div class="scale"><input type="range" min="0" max="10" id="score" value="5"><output id="scoreout">5/10</output></div>
+<h3>2. Mon cycle</h3>
+<label>Jour approximatif du cycle</label><input type="number" id="cycleDay" min="1" max="60" placeholder="Ex. 19">
+<label>Phase</label><select id="phase"><option value="">Je ne sais pas</option><option>Règles</option><option>Après les règles</option><option>Ovulation présumée</option><option>Avant les règles</option><option>Contraception hormonale</option></select>
+<label>Symptômes</label><div class="options" id="cycleSymptoms"></div>
+<h3>3. Digestion</h3><div class="options" id="digestion"></div>
+<h3>4. Alimentation</h3><div class="options" id="food"></div>
+<h3>5. Stress et émotions</h3><label>Stress /10</label><div class="scale"><input type="range" min="0" max="10" id="stress" value="0"><output id="stressout">0/10</output></div>
+<label>Émotion dominante</label><select id="emotion"><option value="">Choisir…</option><option>Calme</option><option>Anxiété</option><option>Colère</option><option>Tristesse</option><option>Frustration</option><option>Fatigue émotionnelle</option><option>Pression / surcharge</option></select>
+<label>Événement ou remarque</label><textarea id="event" placeholder="Facultatif"></textarea>
+<h3>6. Sommeil</h3><label>Nombre d'heures</label><input type="number" id="sleepHours" min="0" max="24" step=".5" placeholder="Ex. 8">
+<label>Qualité</label><select id="sleepQuality"><option value="">Choisir…</option><option>Réparateur</option><option>Moyen</option><option>Mauvais</option><option>Réveils nocturnes</option><option>Difficulté à m'endormir</option></select>
+<h3>7. Ma routine de soin</h3><div class="options" id="routine"></div><label>Précisions / produits changés</label><textarea id="routineNotes"></textarea>
+<h3>8. Autres détails</h3><div class="options" id="other"></div><label>Précisions</label><textarea id="otherNotes"></textarea>
+<h3>9. Mon petit bilan personnel</h3><label>Qu'est-ce qui a été différent aujourd'hui ?</label><textarea id="reflection"></textarea><label>Comment je me sens ce soir / ce que je retiens</label><textarea id="evening"></textarea>
+<h3>Mes photos du jour</h3><label>Ajouter une ou plusieurs photos</label><input type="file" id="photoFiles" accept="image/*" multiple><p class="hint">Choisis si possible une lumière, un angle et une distance similaires. Les photos restent dans le stockage local du navigateur.</p><div id="preview" class="photos"></div>
+<div class="actions"><button class="primary" id="save">Enregistrer ma journée</button><button class="secondary" id="clear">Effacer le formulaire</button></div><p id="status" class="hint" role="status"></p>
+</div>
+</section>
+<section id="history" class="hidden"><div class="panel"><h2>Mon historique</h2><div id="entries"></div></div></section>
+<section id="photos" class="hidden"><div class="panel"><h2>Ma galerie</h2><p class="hint">Tes photos sont classées par date. Elles ne sont pas envoyées en ligne.</p><div id="gallery"></div></div></section>
+<section id="report" class="hidden"><div class="panel"><h2>Mon bilan mensuel</h2><label>Mois à analyser</label><input type="month" id="month"><div class="actions"><button class="primary" id="makeReport">Créer mon bilan</button><button class="secondary" id="print">Exporter / imprimer en PDF</button><button class="secondary" id="backup">Télécharger une sauvegarde</button><label class="secondary" style="display:inline-block">Importer une sauvegarde<input type="file" id="restore" accept="application/json" style="display:none"></label></div><div id="reportContent" style="margin-top:18px"></div><p class="hint">Les tendances montrent des associations observées dans ton journal, pas des causes médicales ni un diagnostic.</p></div></section>
+</main>
+<footer>My Skin Journal · Tes données restent dans ce navigateur, sur cet appareil.</footer>
+<script>
+const $=id=>document.getElementById(id);
+const multi={
+types:['Petits boutons','Points noirs / comédons','Rouges / inflammatoires','Douloureux','Sous la peau / kystiques'],
+zones:['Front','Tempes','Joues','Menton','Mâchoire','Autour de la bouche','Cou / poitrine / dos'],
+cycleSymptoms:['SPM','Douleurs','Seins sensibles','Saignements','Rien'],
+digestion:['Transit normal','Constipation','Selles molles / diarrhée','Pas de selles','Ballonnements','Gaz','Lourdeurs','Reflux','Rien d’autre'],
+food:['Plus de sucre','Grignotage','Repas riche / fast-food','Produits laitiers','Alcool','Peu de légumes / fibres','Peu d’eau','Rien de particulier'],
+routine:['Routine habituelle','Nouveau produit','Nouvel actif','Exfoliation / peeling','Masque','Soin en institut','J’ai touché / percé mes boutons'],
+other:['Cheveux plus gras','Transpiration / sport','Fatigue inhabituelle','Nouveau médicament / complément','Changement de contraception / traitement','Touché mon visage','Rien de particulier']
+};
+function buildChecks(id,items){$(id).innerHTML=items.map((v,i)=>`<label><input type="checkbox" value="${v.replaceAll('"','&quot;')}"><span>${v}</span></label>`).join('')}
+Object.entries(multi).forEach(([k,v])=>buildChecks(k,v));
+function checks(id){return [...$(id).querySelectorAll('input:checked')].map(x=>x.value)}
+function setChecks(id,vals=[]){$(id).querySelectorAll('input').forEach(x=>x.checked=vals.includes(x.value))}
+const keys=['date','cycleDay','phase','score','stress','emotion','event','sleepHours','sleepQuality','routineNotes','otherNotes','reflection','evening'];
+let selectedPhotos=[];
+let dbPromise=indexedDB.open('MySkinJournalDB',1);
+dbPromise.onupgradeneeded=e=>{let db=e.target.result;if(!db.objectStoreNames.contains('days'))db.createObjectStore('days',{keyPath:'date'})};
+function db(){return new Promise((res,rej)=>{dbPromise.onsuccess=()=>res(dbPromise.result);dbPromise.onerror=()=>rej(dbPromise.error)})}
+async function allDays(){let d=await db();return new Promise((res,rej)=>{let r=d.transaction('days').objectStore('days').getAll();r.onsuccess=()=>res(r.result.sort((a,b)=>b.date.localeCompare(a.date)));r.onerror=()=>rej(r.error)})}
+async function putDay(day){let d=await db();return new Promise((res,rej)=>{let r=d.transaction('days','readwrite').objectStore('days').put(day);r.onsuccess=()=>res();r.onerror=()=>rej(r.error)})}
+function current(){let o={};keys.forEach(k=>o[k]=$(k).value);o.skin=document.querySelector('input[name=skin]:checked')?.value||'';Object.keys(multi).forEach(k=>o[k]=checks(k));return o}
+function fill(o){keys.forEach(k=>{if($(k))$(k).value=o[k]??''});document.querySelectorAll('input[name=skin]').forEach(x=>x.checked=x.value===o.skin);Object.keys(multi).forEach(k=>setChecks(k,o[k]));['score','stress'].forEach(k=>$(k+'out').textContent=$(k).value+'/10')}
+$('date').value=new Date().toISOString().slice(0,10);$('month').value=new Date().toISOString().slice(0,7);
+['score','stress'].forEach(k=>$(k).addEventListener('input',()=>$(k+'out').textContent=$(k).value+'/10'));
+$('photoFiles').addEventListener('change',async e=>{selectedPhotos=await Promise.all([...e.target.files].map(file=>new Promise(resolve=>{let r=new FileReader();r.onload=()=>resolve({name:file.name,data:r.result});r.readAsDataURL(file)})));renderPreview()});
+function renderPreview(){ $('preview').innerHTML=selectedPhotos.map(p=>`<img src="${p.data}" alt="Aperçu photo">`).join('') }
+$('save').onclick=async()=>{try{let day=current();day.photos=selectedPhotos;await putDay(day);$('status').textContent='Journée enregistrée sur cet appareil. 💗';await renderHistory();await renderGallery()}catch(e){$('status').textContent='Enregistrement impossible : espace de stockage peut-être insuffisant.'}};
+$('clear').onclick=()=>{fill({date:new Date().toISOString().slice(0,10),score:5,stress:0});selectedPhotos=[];$('photoFiles').value='';renderPreview();$('status').textContent='Formulaire effacé.'};
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));['today','history','photos','report'].forEach(t=>$(t).classList.toggle('hidden',t!==b.dataset.tab));if(b.dataset.tab==='history')renderHistory();if(b.dataset.tab==='photos')renderGallery()});
+async function renderHistory(){let ds=await allDays();$('entries').innerHTML=ds.length?ds.map(d=>`<div class="entry"><b>${d.date}</b> · ${d.skin||'État non précisé'} · peau ${d.score||'—'}/10<br><span class="hint">${(d.zones||[]).join(', ')} · cycle ${d.cycleDay||'—'} · stress ${d.stress||0}/10 · ${d.photos?.length||0} photo(s)</span><div class="actions"><button class="secondary" onclick="editDay('${d.date}')">Ouvrir / modifier</button><button class="secondary" onclick="deleteDay('${d.date}')">Supprimer</button></div></div>`).join(''):'Aucune journée enregistrée pour le moment.'}
+window.editDay=async date=>{let d=(await allDays()).find(x=>x.date===date);if(d){fill(d);selectedPhotos=d.photos||[];renderPreview();document.querySelector('[data-tab=today]').click()}};
+window.deleteDay=async date=>{if(!confirm('Supprimer cette journée et ses photos ?'))return;let d=await db();d.transaction('days','readwrite').objectStore('days').delete(date);renderHistory();renderGallery()};
+async function renderGallery(){let ds=await allDays();$('gallery').innerHTML=ds.filter(d=>d.photos?.length).map(d=>`<div class="entry"><b>${d.date}</b><div class="photos">${d.photos.map(p=>`<img src="${p.data}" alt="Photo du ${d.date}">`).join('')}</div></div>`).join('')||'Aucune photo enregistrée.'}
+$('makeReport').onclick=async()=>{let m=$('month').value,ds=(await allDays()).filter(d=>d.date.startsWith(m));if(!ds.length){$('reportContent').innerHTML='Aucune donnée enregistrée pour ce mois.';return}let avg=k=>{let a=ds.map(d=>Number(d[k])).filter(Number.isFinite);return a.length?(a.reduce((x,y)=>x+y,0)/a.length).toFixed(1):'—'};let freq=k=>{let c={};ds.forEach(d=>(d[k]||[]).forEach(v=>c[v]=(c[v]||0)+1));return Object.entries(c).sort((a,b)=>b[1]-a[1]).slice(0,5).map(x=>`${x[0]} (${x[1]} j)`).join(', ')||'—'};let rows=ds.slice().reverse().map(d=>`<tr><td>${d.date}</td><td>${d.skin||'—'}</td><td>${d.score??'—'}/10</td><td>${d.cycleDay||'—'}</td><td>${d.stress??'—'}/10</td><td>${d.photos?.length||0}</td></tr>`).join('');$('reportContent').innerHTML=`<div class="grid"><div class="stat"><b>${ds.length}</b><small>jours renseignés</small></div><div class="stat"><b>${avg('score')}/10</b><small>note moyenne de peau</small></div><div class="stat"><b>${avg('stress')}/10</b><small>stress moyen</small></div><div class="stat"><b>${ds.reduce((n,d)=>n+(d.photos?.length||0),0)}</b><small>photos</small></div></div><h3>Éléments les plus souvent notés</h3><p><b>Zones :</b> ${freq('zones')}</p><p><b>Types de boutons :</b> ${freq('types')}</p><p><b>Digestion :</b> ${freq('digestion')}</p><p><b>Alimentation :</b> ${freq('food')}</p><p><b>Routine :</b> ${freq('routine')}</p><h3>Journal du mois</h3><div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:12px"><tr><th>Date</th><th>Peau</th><th>Note</th><th>Cycle</th><th>Stress</th><th>Photos</th></tr>${rows}</table></div><p class="hint">Ces résultats décrivent uniquement les entrées consignées. Ils ne démontrent pas de lien de cause à effet.</p>`};
+$('print').onclick=()=>{if(!$('reportContent').innerHTML) $('makeReport').click();setTimeout(()=>window.print(),200)};
+$('backup').onclick=async()=>{let ds=await allDays(),blob=new Blob([JSON.stringify(ds)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='my-skin-journal-sauvegarde.json';a.click();URL.revokeObjectURL(a.href)};
+$('restore').onchange=async e=>{try{let arr=JSON.parse(await e.target.files[0].text());for(let d of arr)await putDay(d);alert('Sauvegarde importée.');renderHistory();renderGallery()}catch(err){alert('Fichier de sauvegarde non valide.')}};
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+<style>@media print{header,nav,.actions,footer,.hint{display:none!important}body{background:white}.panel{border:0;box-shadow:none}main{max-width:none;padding:0}}</style>
+</body></html>
